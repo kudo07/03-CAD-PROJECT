@@ -5,6 +5,7 @@ import { PrismaClient } from '@prisma/client';
 import { Pool, neonConfig } from '@neondatabase/serverless';
 import { PrismaNeon } from '@prisma/adapter-neon';
 import cadRoutes from './routes/cad.routes.js';
+import blockRoutes from './routes/block.route.js';
 import path from 'path';
 import ws from 'ws';
 //
@@ -39,6 +40,7 @@ app.get('/test', (req, res) => {
 });
 // ROUTES
 app.use('/api/cad', cadRoutes);
+app.use('/api/block', blockRoutes);
 // GLOBAL ERROR HANDLER
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
