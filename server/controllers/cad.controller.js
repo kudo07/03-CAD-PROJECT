@@ -7,7 +7,7 @@ import { errorHandler } from '../utils/error.js';
 export const uploadFile = async (req, res, next) => {
   try {
     const file = req.file;
-    console.log(file);
+    // console.log(file);
 
     if (!file) {
       return res.status(400).json({ message: 'No file uploaded.' });
@@ -32,11 +32,11 @@ export const uploadFile = async (req, res, next) => {
 
     if (parsed.blocks) {
       for (const [blockName, blockData] of Object.entries(parsed.blocks)) {
-        console.log(blockName);
+        // console.log(blockName);
 
         const baseX = blockData.basePoint?.x || 0;
         const baseY = blockData.basePoint?.y || 0;
-        console.log();
+        // console.log();
 
         await prisma.block.create({
           data: {
@@ -73,6 +73,6 @@ export const uploadFile = async (req, res, next) => {
     });
   } catch (err) {
     console.error(err);
-    next(errorHandler(500, 'FILE IS NOT UPLOAD'));
+    next(errorHandler(500, 'FAILED TO UPLOAD FILE'));
   }
 };
