@@ -28,9 +28,24 @@ cd cad-block-extractor-backend
 
 ##.ENV.EXAMPLE has cloudinary and database url example sample for env
 
-## BACKEND==> ROOT:NPM RUN DEV
+# BACKEND==> ROOT:NPM RUN DEV
 
-## FRONTEND==> CLIENT:NPM RUN DEV
+# FRONTEND==> CLIENT:NPM RUN DEV
+
+# GLOBAL ERROR HANDLING
+
+# USE NAMES FOR RELATIBILITY OF THEIR WORKING 'ROUTE','CONTROLLER'
+
+# DEPLOYED ON RENDER FULLY
+
+# env.example
+
+DATABASE_URL=your_postgres_url
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+# info
 
 complete now the project is done
 go to the server folder in the github i create the endpoints with response
