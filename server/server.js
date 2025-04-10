@@ -28,7 +28,7 @@ prisma.$connect();
 app.use(express.json());
 app.use(urlencoded({ extended: false }));
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: 'https://zero3-cad-project.onrender.com/',
   credentials: true,
 };
 app.use(cors(corsOptions));
