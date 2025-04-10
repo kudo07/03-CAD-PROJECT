@@ -6,6 +6,10 @@ This is the backend for the CAD Block Extractor project. It allows users to uplo
 
 ---
 
+<!-- MP4 -->
+
+<video src="./demo.mp4" controls width="100%"></video>
+
 ## 📦 Tech Stack
 
 - **Node.js** + **Express.js**
