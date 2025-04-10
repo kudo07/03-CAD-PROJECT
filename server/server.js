@@ -25,13 +25,7 @@ const adapter = new PrismaNeon(pool);
 const prisma = new PrismaClient({ adapter });
 prisma.$connect();
 //MIDDLEWARE
-app.use((req, res, next) => {
-  res.setHeader(
-    'Content-Security-Policy',
-    "default-src 'self'; font-src 'self' data: https://zero3-cad-project.onrender.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: *;"
-  );
-  next();
-});
+
 app.use(express.json());
 app.use(urlencoded({ extended: false }));
 const corsOptions = {
@@ -57,6 +51,13 @@ app.use((err, req, res, next) => {
     message,
     statusCode,
   });
+});
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; font-src 'self' data: https://zero3-cad-project.onrender.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: *;"
+  );
+  next();
 });
 
 // server
