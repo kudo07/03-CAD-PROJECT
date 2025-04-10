@@ -34,4 +34,4 @@ add cloudinary and database url
 
 complete now the project is done
 go to the server folder in the github i create the endpoints with response
-this porject has global error handling in the backend
+this project has global error handling in the backend
