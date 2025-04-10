@@ -52,14 +52,11 @@ app.use((err, req, res, next) => {
     statusCode,
   });
 });
-app.use((req, res, next) => {
-  res.setHeader(
-    'Content-Security-Policy',
-    "default-src 'self'; font-src 'self' data: https://zero3-cad-project.onrender.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: *;"
-  );
-  next();
+//
+app.use(express.static(path.join(_dirname, '/client/dist')));
+app.get(/^\/(?!api).*/, (req, res) => {
+  res.sendFile(path.join(_dirname, 'client', 'dist', 'index.html'));
 });
-
 // server
 // Start the server
 const PORT = process.env.PORT || 5000;
