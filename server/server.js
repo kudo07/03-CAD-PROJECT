@@ -53,8 +53,11 @@ app.use((err, req, res, next) => {
   });
 });
 //
-app.use(express.static(path.join(_dirname, '/client/dist')));
 
+app.use(express.static(path.join(_dirname, '/client/dist')));
+app.get(/^\/(?!api).*/, (req, res) => {
+  res.sendFile(path.join(_dirname, 'client', 'dist', 'index.html'));
+});
 // server
 // Start the server
 const PORT = process.env.PORT || 5000;

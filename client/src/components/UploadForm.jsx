@@ -17,7 +17,7 @@ export default function UploadForm() {
 
     try {
       const res = await axios.post(
-        'http://localhost:5000/api/cad/upload',
+        'http://localhost:5000/api/cad/upload-cad',
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' },
