@@ -29,7 +29,7 @@ prisma.$connect();
 app.use(express.json());
 app.use(urlencoded({ extended: false }));
 const corsOptions = {
-  origin: ['http://localhost:5173', 'https://zero3-cad-project.onrender.com'],
+  origin: ['http://localhost:5173', 'https://zero3-cad-project.onrender.com/'],
   credentials: true,
 };
 app.use(cors(corsOptions));
@@ -54,9 +54,7 @@ app.use((err, req, res, next) => {
 });
 //
 app.use(express.static(path.join(_dirname, '/client/dist')));
-app.get(/^\/(?!api).*/, (req, res) => {
-  res.sendFile(path.join(_dirname, 'client', 'dist', 'index.html'));
-});
+
 // server
 // Start the server
 const PORT = process.env.PORT || 5000;
