@@ -8,7 +8,7 @@ This is the backend for the CAD Block Extractor project. It allows users to uplo
 
 <!-- MP4 -->
 
-<video src="./demo.mp4" controls width="100%"></video>
+<video src="./demo.mp4" controls width="100%" height="50%"></video>
 
 ## 📦 Tech Stack
 
