@@ -7,7 +7,7 @@ import { errorHandler } from '../utils/error.js';
 export const uploadFile = async (req, res, next) => {
   try {
     const file = req.file;
-    // console.log(file);
+    console.log(file);
 
     if (!file) {
       return res.status(400).json({ message: 'No file uploaded.' });
