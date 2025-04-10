@@ -4,61 +4,63 @@ import cors from 'cors';
 import { PrismaClient } from '@prisma/client';
 import { Pool, neonConfig } from '@neondatabase/serverless';
 import { PrismaNeon } from '@prisma/adapter-neon';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import ws from 'ws';
+
 import cadRoutes from './routes/cad.routes.js';
 import blockRoutes from './routes/block.route.js';
-import path from 'path';
-import ws from 'ws';
-//
-dotenv.config();
-const app = express();
-const _dirname = path.resolve();
-// websocket constructor for neon
-neonConfig.webSocketConstructor = ws;
-// Database connection string
-const connectionString = process.env.DATABASE_URL;
 
-// Set up the pool with Neon and PrismaNeon adapter
+// Setup __dirname in ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load env vars
+dotenv.config();
+
+// WebSocket for Neon
+neonConfig.webSocketConstructor = ws;
+
+// Setup Express app
+const app = express();
+
+// Database setup
+const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({ connectionString });
 const adapter = new PrismaNeon(pool);
-
-// Initialize Prisma Client with the Neon adapter
 const prisma = new PrismaClient({ adapter });
-prisma.$connect();
-//MIDDLEWARE
+await prisma.$connect();
 
+// Middleware
 app.use(express.json());
 app.use(urlencoded({ extended: false }));
-const corsOptions = {
-  origin: ['http://localhost:5173', 'https://zero3-cad-project.onrender.com'],
-  credentials: true,
-};
-app.use(cors(corsOptions));
-//
+app.use(
+  cors({
+    origin: ['http://localhost:5173', 'https://zero3-cad-project.onrender.com'],
+    credentials: true,
+  })
+);
 
-// test
-app.get('/test', (req, res) => {
-  res.send('hellp');
-});
-// ROUTES
+// Routes
 app.use('/api/cad', cadRoutes);
 app.use('/api/block', blockRoutes);
-// GLOBAL ERROR HANDLER
+
+// Test route
+app.get('/test', (req, res) => res.send('hello'));
+
+// Serve frontend (after API routes!)
+app.use(express.static(path.join(__dirname, 'client/dist')));
+app.get('*', (_, res) => {
+  res.sendFile(path.join(__dirname, 'client/dist/index.html'));
+});
+
+// Error handler
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || 'Internal server error';
-  return res.status(statusCode).json({
-    success: false,
-    message,
-    statusCode,
-  });
+  res.status(statusCode).json({ success: false, message, statusCode });
 });
-app.use(express.static(path.join(_dirname, '/client/dist')));
-app.get('*', (_, res) => {
-  res.sendFile(path.resolve(_dirname, 'client', 'dist', 'index.html'));
-});
-// server
-// Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Serverr is running on port ${PORT}`);
-});
+
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
