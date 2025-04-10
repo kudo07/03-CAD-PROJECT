@@ -11,6 +11,7 @@ import ws from 'ws';
 //
 dotenv.config();
 const app = express();
+const _dirname = path.resolve();
 // websocket constructor for neon
 neonConfig.webSocketConstructor = ws;
 // Database connection string
@@ -28,7 +29,7 @@ prisma.$connect();
 app.use(express.json());
 app.use(urlencoded({ extended: false }));
 const corsOptions = {
-  origin: 'https://zero3-cad-project.onrender.com/',
+  origin: ['http://localhost:5173', 'https://zero3-cad-project.onrender.com'],
   credentials: true,
 };
 app.use(cors(corsOptions));
@@ -50,6 +51,10 @@ app.use((err, req, res, next) => {
     message,
     statusCode,
   });
+});
+app.use(express.static(path.join(_dirname, '/client/dist')));
+app.get('*', (_, res) => {
+  res.sendFile(path.resolve(_dirname, 'client', 'dist', 'index.html'));
 });
 // server
 // Start the server
