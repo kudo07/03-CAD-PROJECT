@@ -22,8 +22,8 @@ export default function BlockList({ onSelect }) {
 
   const searchBlocks = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/blocks/search', {
-        params: { name: search, type },
+      const res = await axios.get('http://localhost:5000/api/block/search', {
+        params: { name: search },
       });
       setBlocks(res.data);
       setPagination({});
